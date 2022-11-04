@@ -18,14 +18,11 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
   try {
     const name = await prompt("What's your name? ");
     const lastName = await prompt(`Hello ${name}, what's your last name? `);
-    let content = `${name} ${lastName}`;
-    fs.writeFile('/Users/abraham/Documents/node-programs/first-app/test.txt', content, err => {
-        if (err) {
-          console.error(err);
-        }
-        // file written successfully
-      });
     rl.close();
+
+	let content = `${name} ${lastName}`;
+    fs.writeFile(__dirname + '/test.txt', content, { flag: 'r+' }, err => {});
+	rl.on('close', () => process.exit(0));
 
   } catch (e) {
     console.error("Unable to prompt", e);
@@ -33,4 +30,3 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
 })();
 
 // When done reading prompt, exit program 
-rl.on('close', () => process.exit(0));
